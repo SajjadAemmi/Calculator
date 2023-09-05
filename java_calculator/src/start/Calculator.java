@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 public class Calculator {
     private JFrame frame;
@@ -13,10 +14,10 @@ public class Calculator {
     private char operator;
 
     public Calculator() {
-        frame = new JFrame("Grid Calculator");
+        frame = new JFrame("Java Calculator");
         frame.setLayout(new BorderLayout());
 
-        textField = new JTextField();
+        textField = new JTextField("0");
         textField.setHorizontalAlignment(JTextField.RIGHT);
         textField.setFont(new Font("Arial", Font.PLAIN, 24));
         textField.setEditable(false);
@@ -30,7 +31,6 @@ public class Calculator {
             numberButtons[i] = new JButton(String.valueOf(i));
             numberButtons[i].setFont(new Font("Arial", Font.PLAIN, 18));
             numberButtons[i].addActionListener(new NumberButtonListener());
-            buttonPanel.add(numberButtons[i]);
         }
 
         addButton = createOperatorButton("+");
@@ -45,12 +45,25 @@ public class Calculator {
         calculateButton.setFont(new Font("Arial", Font.PLAIN, 18));
         calculateButton.addActionListener(new CalculateButtonListener());
 
+        buttonPanel.add(numberButtons[7]);
+        buttonPanel.add(numberButtons[8]);
+        buttonPanel.add(numberButtons[9]);
         buttonPanel.add(addButton);
+
+        buttonPanel.add(numberButtons[4]);
+        buttonPanel.add(numberButtons[5]);
+        buttonPanel.add(numberButtons[6]);
         buttonPanel.add(subtractButton);
+
+        buttonPanel.add(numberButtons[1]);
+        buttonPanel.add(numberButtons[2]);
+        buttonPanel.add(numberButtons[3]);
         buttonPanel.add(multiplyButton);
-        buttonPanel.add(divideButton);
+
+        buttonPanel.add(numberButtons[0]);
         buttonPanel.add(clearButton);
         buttonPanel.add(calculateButton);
+        buttonPanel.add(divideButton);
 
         frame.add(buttonPanel, BorderLayout.CENTER);
 
@@ -69,6 +82,9 @@ public class Calculator {
     private class NumberButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            if (Objects.equals(textField.getText(), "0")) {
+                textField.setText("");
+            }
             String buttonText = ((JButton) e.getSource()).getText();
             textField.setText(textField.getText() + buttonText);
         }
@@ -86,7 +102,7 @@ public class Calculator {
             if (!textField.getText().isEmpty()) {
                 num1 = Double.parseDouble(textField.getText());
                 Calculator.this.operator = operator.charAt(0);
-                textField.setText("");
+                textField.setText("0");
             }
         }
     }
